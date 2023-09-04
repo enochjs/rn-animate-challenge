@@ -1,10 +1,10 @@
 import { View } from 'react-native';
 import { TarotCards } from '@/TarotCards';
+import { StickyTabs } from '@/StickyTabs';
+import { WanderAppInteractions } from '@/WanderAppInteractions';
+// import WithTiming from '@/WithTiming';
+import WithSpring from '@/WithSpring';
 
 export default function App() {
-  return (
-    <View className="flex-1 justify-center items-center bg-slate-400">
-      <TarotCards />
-    </View>
-  );
+  return <StickyTabs />;
 }
