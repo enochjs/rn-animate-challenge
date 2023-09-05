@@ -1,10 +1,11 @@
-import { View } from 'react-native';
-import { TarotCards } from '@/TarotCards';
-import { StickyTabs } from '@/StickyTabs';
-import { WanderAppInteractions } from '@/WanderAppInteractions';
+// import { View } from 'react-native';
+// import { TarotCards } from '@/TarotCards';
+// import { StickyTabs } from '@/StickyTabs';
+// import { WanderAppInteractions } from '@/WanderAppInteractions';
 // import WithTiming from '@/WithTiming';
-import WithSpring from '@/WithSpring';
+// import WithSpring from '@/WithSpring';
+import ScrollTo from '@/Base/ScrollTo';
 
 export default function App() {
-  return <StickyTabs />;
+  return <ScrollTo />;
 }
