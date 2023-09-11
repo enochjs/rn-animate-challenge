@@ -1730,6 +1730,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@likashefqet/react-native-image-zoom@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npmmirror.com/@likashefqet/react-native-image-zoom/-/react-native-image-zoom-2.1.1.tgz#f98dfa367adce1659a2a06800df23b490ca388df"
+  integrity sha512-SmTvMUgZdCouB44u7Jubb4JAAC3/fBDIzgkBiOeNT4K24ffrVB1NJZh8STPuDVyr45RK6EYrZLuZ2sQPMbyDVQ==
+
 "@motionone/animation@^10.12.0":
   version "10.15.1"
   resolved "https://registry.npmmirror.com/@motionone/animation/-/animation-10.15.1.tgz#4a85596c31cbc5100ae8eb8b34c459fb0ccf6807"
@@ -6836,6 +6841,18 @@ react-native-gesture-handler@^2.12.1:
     invariant "^2.2.4"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+react-native-image-pan-zoom@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.npmmirror.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
+  integrity sha512-BF66XeP6dzuANsPmmFsJshM2Jyh/Mo1t8FsGc1L9Q9/sVP8MJULDabB1hms+eAoqgtyhMr5BuXV3E1hJ5U5H6Q==
+
+react-native-image-zoom-viewer@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/react-native-image-zoom-viewer/-/react-native-image-zoom-viewer-3.0.1.tgz#a2bd5fb3bda15e0686ce88fcde8576726495d7fb"
+  integrity sha512-la6s5DNSuq4GCRLsi5CZ29FPjgTpdCuGIRdO5T9rUrAtxrlpBPhhSnHrbmPVxsdtOUvxHacTh2Gfa9+RraMZQA==
+  dependencies:
+    react-native-image-pan-zoom "^2.1.12"
 
 react-native-reanimated@3.3.0:
   version "3.3.0"
