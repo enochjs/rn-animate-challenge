@@ -34,6 +34,7 @@ const ImageZoom: React.FC<ImageZoomProps> = ({
   horizontalOuterRangeOffset,
   ...props
 }) => {
+  console.log('=====horizontalOuterRangeOffset', horizontalOuterRangeOffset);
   const { center, width, height, onImageLayout } = useImageLayout({ onLayout });
   const { animatedStyle, gestures } = useGestures({
     center,

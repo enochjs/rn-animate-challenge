@@ -32,6 +32,7 @@ export const useGestures = ({
   height = Dimensions.get('window').height,
   horizontalOuterRangeOffset,
 }: ImageZoomUseGesturesProps) => {
+  console.log('====1', horizontalOuterRangeOffset);
   const isInteracting = useRef(false);
   const isPanning = useRef(false);
   const isPinching = useRef(false);
@@ -110,13 +111,14 @@ export const useGestures = ({
       const maxX = (width * scale.value - width) / 2;
       const maxY = (height * scale.value - height) / 2;
 
-      console.log('---horizontalOuterRangeOffset', horizontalOuterRangeOffset);
+      // console.log('---horizontalOuterRangeOffset', horizontalOuterRangeOffset);
 
-      // if (Math.abs(tempX) > maxX) {
-      //   console.log('====come in');
-      //   // scroll to next
-      //   horizontalOuterRangeOffset(tempX < 0 ? tempX + maxX : tempX - maxX);
-      // }
+      if (Math.abs(tempX) > maxX) {
+        runOnJS(horizontalOuterRangeOffset)(-(tempX < 0 ? tempX + maxX : tempX - maxX));
+        console.log('====come in', tempX < 0 ? tempX + maxX : tempX - maxX);
+        // scroll to next
+        // horizontalOuterRangeOffset(tempX < 0 ? tempX + maxX : tempX - maxX);
+      }
 
       if (Math.abs(tempX) <= maxX) {
         translate.x.value = tempX;
