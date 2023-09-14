@@ -39,7 +39,7 @@ export default function PanGesture() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <GestureDetector gesture={gesture}>
-        <Animated.View style={[{ width: 100, height: 100, backgroundColor: 'pink' }, animatedStyle]}></Animated.View>
+        <Animated.View style={[{ width: 300, height: 300, backgroundColor: 'pink' }, animatedStyle]}></Animated.View>
       </GestureDetector>
     </GestureHandlerRootView>
   );
