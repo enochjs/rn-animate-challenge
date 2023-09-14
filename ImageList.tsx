@@ -1,4 +1,4 @@
-import { ImageZoom } from '@/Image/ImageZoom/src/index';
+import { ImageZoom } from '@/Image/Zoom2/src';
 import * as React from 'react';
 import { StatusBar, FlatList, Image, Animated, View, Dimensions, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
