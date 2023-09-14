@@ -7,8 +7,8 @@
 // import ScrollTo from '@/Base/ScrollTo';
 import ImageZoom from '@/Image/imageZoom';
 import ImagePanZoom from '@/Image/imagePanZoom';
-import ImageList from 'ImageList';
+import PanGesture from '@/Gesture/PanGesture';
 
 export default function App() {
-  return <ImageList />;
+  return <PanGesture />;
 }
