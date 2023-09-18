@@ -9,7 +9,9 @@ import ImageZoom from '@/Image/imageZoom';
 import ImagePanZoom from '@/Image/imagePanZoom';
 import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
+// import TableDemo from '@/Table2/index';
+import TableDemo from '@/Table2/index';
 
 export default function App() {
-  return <AnimatedKeyboardExample />;
+  return <TableDemo />;
 }
