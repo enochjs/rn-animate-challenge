@@ -7,8 +7,9 @@
 // import ScrollTo from '@/Base/ScrollTo';
 import ImageZoom from '@/Image/imageZoom';
 import ImagePanZoom from '@/Image/imagePanZoom';
-import RotationGesture from '@/Gesture/RotationGesture';
+import Swipealbe from '@/Gesture/swipealbe';
+import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
 
 export default function App() {
-  return <RotationGesture />;
+  return <AnimatedKeyboardExample />;
 }
