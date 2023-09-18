@@ -7,8 +7,8 @@
 // import ScrollTo from '@/Base/ScrollTo';
 import ImageZoom from '@/Image/imageZoom';
 import ImagePanZoom from '@/Image/imagePanZoom';
-import TapGesture from '@/Gesture/TapGesture';
+import RotationGesture from '@/Gesture/RotationGesture';
 
 export default function App() {
-  return <TapGesture />;
+  return <RotationGesture />;
 }
