@@ -9,7 +9,8 @@ import ImageZoom from '@/Image/imageZoom';
 import ImagePanZoom from '@/Image/imagePanZoom';
 import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
+import WithTiming from '@/Animated/WithTiming';
 
 export default function App() {
-  return <AnimatedKeyboardExample />;
+  return <WithTiming />;
 }
