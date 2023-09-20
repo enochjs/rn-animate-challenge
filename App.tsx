@@ -11,7 +11,8 @@ import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
 // import TableDemo from '@/Table2/index';
 import TableDemo from '@/Table2/index';
+import WithDecay from '@/Animated/WithDecay';
 
 export default function App() {
-  return <TableDemo />;
+  return <WithDecay />;
 }
