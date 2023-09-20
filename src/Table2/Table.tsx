@@ -3,6 +3,7 @@ import Animated, { useAnimatedStyle, useSharedValue, useWorkletCallback } from '
 import Header from './Header';
 import { useCallback, useMemo, useState } from 'react';
 import Row from './Row';
+import Col from './Col';
 
 const HEADER_HEIGHT = 56;
 
@@ -20,6 +21,11 @@ export default function Table(props: ITableProps) {
   const [viewWidth, setViewWidth] = useState(dimensions.width);
 
   const scrollY = useSharedValue(0);
+
+  const hasRowSpan = useMemo(() => {
+    const rowSpanKeys = columns.filter((item) => item.rowSpanKey);
+    return rowSpanKeys.length;
+  }, [columns]);
 
   const handleScrollVertical = useWorkletCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollY.value = event.nativeEvent.contentOffset.y;
@@ -51,6 +57,25 @@ export default function Table(props: ITableProps) {
     setViewWidth(e.nativeEvent.layout.width);
   }, []);
 
+  const renderContent = () => {
+    if (hasRowSpan) {
+      return (
+        <View className="flex-row">
+          {columns.map((item, index) => (
+            <Col key={item.dataIndex} column={item} width={widthArr?.[index]} flex={flexArr?.[index]} data={data} heightRef={heightRef} />
+          ))}
+        </View>
+      );
+    }
+    return (
+      <>
+        {data.map((item: any, index) => (
+          <Row key={index} data={item} columns={columns} width={rowWidth} widthArr={widthArr} flexArr={flexArr} />
+        ))}
+      </>
+    );
+  };
+
   return (
     <View className="relative h-80 overflow-hidden bg-white" onLayout={handleLayout}>
       <ScrollView horizontal showsVerticalScrollIndicator={false} style={{ position: 'relative', zIndex: 1 }}>
@@ -64,9 +89,7 @@ export default function Table(props: ITableProps) {
               height={HEADER_HEIGHT}
               style={{ backgroundColor: 'red' }}
             />
-            {data.map((item: any, index) => (
-              <Row key={index} data={item} columns={columns} width={rowWidth} widthArr={widthArr} flexArr={flexArr} />
-            ))}
+            {renderContent()}
           </ScrollView>
         </View>
       </ScrollView>
@@ -90,15 +113,11 @@ export default function Table(props: ITableProps) {
         ]}
       >
         <Animated.View style={[animatedYStyle]}>
-          {data.map((item: any, index) => (
-            <View key={index.toString()} className="flex-row">
-              {columns.slice(0, 2).map((c) => (
-                <View key={c.dataIndex} style={{ width: c.width, height: heightRef.current?.[index] }}>
-                  <Text>{item[c.dataIndex]}</Text>
-                </View>
-              ))}
-            </View>
-          ))}
+          <View className="flex-row">
+            {columns.slice(0, 2).map((c, index) => (
+              <Col key={c.dataIndex} column={c} width={widthArr?.[index]} flex={flexArr?.[index]} data={data} heightRef={heightRef} />
+            ))}
+          </View>
         </Animated.View>
       </View>
     </View>

@@ -39,7 +39,7 @@ function Cell(props: CellProps) {
   }, [width, height, flex, style]);
 
   return (
-    <View style={[styles.cell, composedStyles, style]}>
+    <View className=" border-pink-100 border-2" style={[styles.cell, composedStyles, style]}>
       {render ? render(data?.[dataIndex], data, index) : <Text style={textStyle}>{data?.[dataIndex] || '-'}</Text>}
     </View>
   );
@@ -50,4 +50,6 @@ const styles = StyleSheet.create({
   text: { backgroundColor: 'transparent' },
 });
 
-export default memo(Cell, (pre, next) => (next.render ? isEqual(pre.data, next.data) : pre.data[pre.dataIndex] === next.data[next.dataIndex]));
+export default memo(Cell, (pre, next) =>
+  next.render ? isEqual(pre.data, next.data) : pre.data[pre.dataIndex] === next.data[next.dataIndex] && pre.height === next.height
+);
