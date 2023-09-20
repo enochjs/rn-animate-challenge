@@ -1,11 +1,18 @@
+import { useEffect } from 'react';
 import { View } from 'react-native';
-import Animated, { useAnimatedStyle, withRepeat, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 export default function WithTiming() {
+  const offset = useSharedValue(0);
+
+  useEffect(() => {
+    offset.value = withRepeat(withTiming(100, { duration: 1500 }), -1, true);
+  }, []);
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateX: withRepeat(withTiming(-200, { duration: 1500 }), -1, true),
+        translateX: offset.value,
       },
     ],
   }));
