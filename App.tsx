@@ -10,9 +10,9 @@ import ImagePanZoom from '@/Image/imagePanZoom';
 import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
 // import TableDemo from '@/Table2/index';
-import TableDemo from '@/Table2/index';
+import TableDemo from '@/Table2/demo';
 import WithDecay from '@/Animated/WithDecay';
 
 export default function App() {
-  return <WithDecay />;
+  return <TableDemo />;
 }

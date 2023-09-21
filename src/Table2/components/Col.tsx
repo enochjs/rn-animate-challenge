@@ -1,19 +1,10 @@
 import React, { useMemo } from 'react';
-import { View, ViewStyle, StyleProp } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import Cell from './Cell';
+import { IDefaultData, ITableColProps } from '../interface';
 
-interface RowProps<T = any> {
-  data: T[];
-  style?: StyleProp<ViewStyle>;
-  width?: number;
-  flex?: number;
-  column: any;
-  heightRef?: React.RefObject<number[]>;
-  rowSpanKey?: string;
-}
-
-export default function Col(props: RowProps) {
-  const { width, style, data, flex, column, heightRef } = props;
+export default function Col<T extends IDefaultData>(props: ITableColProps<T>) {
+  const { width, style, data, flex, column, heightArr } = props;
 
   const composedStyle = useMemo(() => {
     const styles: ViewStyle = {};
@@ -32,20 +23,21 @@ export default function Col(props: RowProps) {
       let count = 0;
       let height = 0;
       while (count < rowSpan) {
-        height += heightRef?.current?.[rowIndex + count] || 0;
+        height += heightArr?.[rowIndex + count] || 0;
         count += 1;
       }
-
+      console.log('===height1', height);
       return height;
     } else {
-      return heightRef?.current?.[rowIndex];
+      console.log('===height2', heightArr?.[rowIndex]);
+      return heightArr?.[rowIndex];
     }
   };
 
   const colData = useMemo(() => {
     return data.map((item, index) => ({
       ...item,
-      height: getRowHeight(index, item.rowSpan),
+      height: getRowHeight(index, item[column.rowSpanKey!] as number),
     }));
   }, [data]);
 
@@ -58,13 +50,13 @@ export default function Col(props: RowProps) {
             <Cell
               key={i}
               data={item}
-              index={i}
-              dataIndex={column.dataIndex}
+              dataIndex={column.dataIndex as string}
               width={width}
               height={item.height || column.height}
               flex={flex}
-              textStyle={column.textStyle}
-              render={column.render}
+              rowIndex={i}
+              textStyle={column.cellTextStyle}
+              render={column.render as any}
             />
           );
         })}

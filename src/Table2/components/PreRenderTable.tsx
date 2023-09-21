@@ -1,16 +1,9 @@
-import { View, LayoutChangeEvent } from 'react-native';
+import { View } from 'react-native';
 import Row from './Row';
+import { IPreRenderTableProps } from '../interface';
 
-interface ITableProps<T = any> {
-  data: T[];
-  columns: any[];
-  onLayout: (event: LayoutChangeEvent, index: number) => void;
-  width?: number;
-  widthArr?: number[];
-  flexArr?: number[];
-}
-
-export default function PreRender(props: ITableProps) {
+// 通过预渲染获取每一行的高度，表哥列固定时，需要根据获得的高度进行渲染
+export default function PreRender<T>(props: IPreRenderTableProps<T>) {
   const { data, columns, onLayout, width, widthArr, flexArr } = props;
 
   return (

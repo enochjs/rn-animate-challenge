@@ -1,25 +1,10 @@
-import React, { ReactNode, memo, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { isEqual } from 'lodash';
-import { View, Text, StyleSheet, ViewStyle, TextStyle, StyleProp } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { IDefaultData, ITableCellProps } from '../interface';
 
-interface CellProps<T = any> {
-  data: T;
-  dataIndex: string;
-  width?: number;
-  height?: number;
-  flex?: number;
-  index: number;
-  style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle>;
-  borderStyle?: {
-    borderColor?: string;
-    borderWidth?: number;
-  };
-  render?: (text: any, data: T, index: number) => ReactNode;
-}
-
-function Cell(props: CellProps) {
-  const { render, data, dataIndex, textStyle, width, height, flex, style, index } = props;
+function Cell<T extends IDefaultData>(props: ITableCellProps<T>) {
+  const { render, data, dataIndex, textStyle, width, height, flex, style, rowIndex } = props;
 
   const composedStyles = useMemo(() => {
     const styles: ViewStyle = {};
@@ -40,7 +25,7 @@ function Cell(props: CellProps) {
 
   return (
     <View className=" border-pink-100 border-2" style={[styles.cell, composedStyles, style]}>
-      {render ? render(data?.[dataIndex], data, index) : <Text style={textStyle}>{data?.[dataIndex] || '-'}</Text>}
+      {render ? render(data?.[dataIndex], data, rowIndex) : <Text style={textStyle}>{(data?.[dataIndex] as string) || '-'}</Text>}
     </View>
   );
 }

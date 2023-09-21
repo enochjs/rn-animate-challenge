@@ -1,20 +1,24 @@
 import { useCallback, useRef, useState } from 'react';
 import { LayoutChangeEvent } from 'react-native';
 
-export function useRowLayout(length: number) {
+// 使用prerender 获取到每一行的高度
+export default function useRowsLayout(length: number) {
   const heightRef = useRef<number[]>([]);
-  const [update, setUpdate] = useState(0);
+  const [heightArr, setHeightArr] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleLayout = useCallback((event: LayoutChangeEvent, index: number) => {
     heightRef.current[index] = event.nativeEvent.layout.height;
 
     if (heightRef.current.filter((item) => item).length === length) {
-      setUpdate(update + 1);
+      setHeightArr([...heightRef.current]);
+      setLoading(false);
     }
   }, []);
 
   return {
-    heightRef,
+    heightArr,
     handleLayout,
+    loading,
   };
 }

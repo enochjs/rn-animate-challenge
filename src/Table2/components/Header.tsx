@@ -1,18 +1,10 @@
 import React, { useMemo } from 'react';
-import { View, ViewStyle, StyleProp, Text } from 'react-native';
+import { View, ViewStyle, Text } from 'react-native';
 import Cell from './Cell';
-import { sum } from './utils';
+import { sum } from '../utils';
+import { IDefaultData, ITableHeaderProps } from '../interface';
 
-interface HeaderProps {
-  style?: StyleProp<ViewStyle>;
-  width?: number;
-  widthArr?: number[];
-  height?: number;
-  flexArr?: number[];
-  columns: any[];
-}
-
-export default function Header(props: HeaderProps) {
+export default function Header<T extends IDefaultData>(props: ITableHeaderProps<T>) {
   const { width, widthArr, height, style, flexArr, columns } = props;
 
   const composedStyle = useMemo(() => {
@@ -34,14 +26,14 @@ export default function Header(props: HeaderProps) {
         const wth = widthArr?.[i];
         return (
           <Cell
-            key={item.dataIndex}
+            key={item.dataIndex as string}
             data={item}
-            index={i}
-            dataIndex={item.dataIndex}
+            rowIndex={i}
+            dataIndex={item.dataIndex as string}
             width={wth}
             height={height}
             flex={flex}
-            textStyle={item.textStyle}
+            textStyle={item.cellTextStyle}
             render={() => <Text>{item.title}</Text>}
           />
         );
