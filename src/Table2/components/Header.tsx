@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, ViewStyle, Text } from 'react-native';
+import { View, Text, ViewStyle } from 'react-native';
 import Cell from './Cell';
 import { sum } from '../utils';
 import { IDefaultData, ITableHeaderProps } from '../interface';

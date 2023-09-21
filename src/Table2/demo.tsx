@@ -382,11 +382,12 @@ export default function TableDemo() {
     dataIndex: `name${index + 1}`,
     width: 80 + index * 10,
     rowSpanKey: index === 0 ? 'rowSpan' : undefined,
+    fixed: index < 2 ? 'left' : undefined,
   }));
 
   return (
     <SafeAreaView>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} rowHeight={20} />
     </SafeAreaView>
   );
 }

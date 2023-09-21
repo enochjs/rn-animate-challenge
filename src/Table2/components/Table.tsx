@@ -1,15 +1,17 @@
-import { ScrollView, View, Text, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, useWindowDimensions } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, useWorkletCallback } from 'react-native-reanimated';
+import { ScrollView, View, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, useWindowDimensions } from 'react-native';
+import { useSharedValue, useWorkletCallback } from 'react-native-reanimated';
 import Header from './Header';
 import { useCallback, useMemo, useState } from 'react';
 import Row from './Row';
 import Col from './Col';
 import { IDefaultData, IRenderTableProps } from '../interface';
+import FixedColumns from './FixedColumns';
+import FixedHeader from './FixedHeader';
 
 const HEADER_HEIGHT = 56;
 
 export default function Table<T extends IDefaultData>(props: IRenderTableProps<T>) {
-  const { data, columns, heightArr } = props;
+  const { data, columns, heightArr, leftColumns, rightColumns } = props;
 
   const dimensions = useWindowDimensions();
 
@@ -17,22 +19,9 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
 
   const scrollY = useSharedValue(0);
 
-  const hasRowSpan = useMemo(() => {
-    const rowSpanKeys = columns.filter((item) => item.rowSpanKey);
-    return rowSpanKeys.length;
-  }, [columns]);
-
   const handleScrollVertical = useWorkletCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollY.value = event.nativeEvent.contentOffset.y;
   }, []);
-
-  const animatedYStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: -scrollY.value }],
-  }));
-
-  const animatedFixedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: scrollY.value < 0 ? -scrollY.value : 0 }],
-  }));
 
   const { rowWidth, widthArr, flexArr } = useMemo(() => {
     let totalWidth = 0;
@@ -53,9 +42,9 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
   }, []);
 
   const renderContent = () => {
-    if (hasRowSpan) {
+    if (heightArr) {
       return (
-        <View className="flex-row">
+        <View className="flex-row" style={{ width: rowWidth }}>
           {columns.map((item, index) => (
             <Col key={item.dataIndex as string} column={item} width={widthArr?.[index]} flex={flexArr?.[index]} data={data} heightArr={heightArr} />
           ))}
@@ -69,6 +58,37 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
         ))}
       </>
     );
+  };
+
+  const renderFixed = () => {
+    if (widthArr && heightArr) {
+      console.log('====lefr', leftColumns, rightColumns);
+      return (
+        <>
+          {leftColumns?.length ? (
+            <>
+              <FixedHeader columns={leftColumns} widthArr={widthArr} heightArr={heightArr} height={HEADER_HEIGHT} scrollY={scrollY} />
+              <FixedColumns columns={leftColumns} data={data} widthArr={widthArr} heightArr={heightArr} top={HEADER_HEIGHT} scrollY={scrollY} />
+            </>
+          ) : null}
+          {rightColumns?.length ? (
+            <>
+              <FixedHeader columns={rightColumns} widthArr={widthArr} heightArr={heightArr} height={HEADER_HEIGHT} scrollY={scrollY} fixed="right" />
+              <FixedColumns
+                columns={rightColumns}
+                data={data}
+                widthArr={widthArr}
+                heightArr={heightArr}
+                top={HEADER_HEIGHT}
+                scrollY={scrollY}
+                fixed="right"
+              />
+            </>
+          ) : null}
+        </>
+      );
+    }
+    return null;
   };
 
   return (
@@ -88,40 +108,7 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
           </ScrollView>
         </View>
       </ScrollView>
-      <Animated.View
-        style={[
-          {
-            position: 'absolute',
-            width: columns[0].width,
-            height: HEADER_HEIGHT,
-            backgroundColor: '#fff',
-            zIndex: 10,
-          },
-          animatedFixedStyle,
-        ]}
-      >
-        <Text>序号1233</Text>
-      </Animated.View>
-      <View
-        style={[
-          { position: 'absolute', overflow: 'hidden', backgroundColor: 'white', left: 0, top: HEADER_HEIGHT, width: columns[0].width, zIndex: 1 },
-        ]}
-      >
-        <Animated.View style={[animatedYStyle]}>
-          <View className="flex-row">
-            {columns.slice(0, 2).map((c, index) => (
-              <Col
-                key={c.dataIndex as string}
-                column={c as any}
-                width={widthArr?.[index]}
-                flex={flexArr?.[index]}
-                data={data}
-                heightArr={heightArr}
-              />
-            ))}
-          </View>
-        </Animated.View>
-      </View>
+      {renderFixed()}
     </View>
   );
 }

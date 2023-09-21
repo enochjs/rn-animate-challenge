@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { SharedValue } from 'react-native-reanimated';
 
 export type IDefaultData = Record<string, unknown>;
 
@@ -30,7 +31,9 @@ export interface IPreRenderTableProps<T> extends ITableCommonProps<T> {
 }
 
 export interface IRenderTableProps<T> extends ITableCommonProps<T> {
-  heightArr: number[];
+  heightArr?: number[];
+  leftColumns?: IGetColumns<T>;
+  rightColumns?: IGetColumns<T>;
 }
 
 export interface ITableRowProps<T> {
@@ -80,4 +83,24 @@ export interface ITableHeaderProps<T> {
 
 export interface ITableProps<T> extends ITableCommonProps<T> {
   tableStyle?: StyleProp<ViewStyle>;
+  rowHeight?: number;
+}
+
+export interface IFixedColumnsProps<T> extends ITableCommonProps<T> {
+  heightArr: number[];
+  top: number;
+  flexArr?: number[];
+  widthArr?: number[];
+  scrollY: SharedValue<number>;
+  fixed?: 'left' | 'right';
+}
+
+export interface IFixedHeaderProps {
+  heightArr: number[];
+  height: number;
+  flexArr?: number[];
+  widthArr?: number[];
+  scrollY: SharedValue<number>;
+  fixed?: 'left' | 'right';
+  columns: any[];
 }

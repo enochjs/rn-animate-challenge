@@ -26,10 +26,8 @@ export default function Col<T extends IDefaultData>(props: ITableColProps<T>) {
         height += heightArr?.[rowIndex + count] || 0;
         count += 1;
       }
-      console.log('===height1', height);
       return height;
     } else {
-      console.log('===height2', heightArr?.[rowIndex]);
       return heightArr?.[rowIndex];
     }
   };
