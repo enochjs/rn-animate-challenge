@@ -4,7 +4,7 @@ import Cell from './Cell';
 import { IDefaultData, ITableColProps } from '../interface';
 
 export default function Col<T extends IDefaultData>(props: ITableColProps<T>) {
-  const { width, style, data, flex, column, heightArr } = props;
+  const { width, style, data, flex, column, heightArr, ...restProps } = props;
 
   const composedStyle = useMemo(() => {
     const styles: ViewStyle = {};
@@ -55,6 +55,7 @@ export default function Col<T extends IDefaultData>(props: ITableColProps<T>) {
               rowIndex={i}
               textStyle={column.cellTextStyle}
               render={column.render as any}
+              {...restProps}
             />
           );
         })}

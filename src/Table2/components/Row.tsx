@@ -5,7 +5,7 @@ import { sum } from '../utils';
 import { IDefaultData, ITableRowProps } from '../interface';
 
 export default function Row<T extends IDefaultData>(props: ITableRowProps<T>) {
-  const { width, widthArr, height, style, data, flexArr, columns } = props;
+  const { width, widthArr, height, style, data, flexArr, columns, ...restProps } = props;
 
   const composedStyle = useMemo(() => {
     const _width = width ? width : widthArr ? sum(widthArr) : 0;
@@ -35,6 +35,8 @@ export default function Row<T extends IDefaultData>(props: ITableRowProps<T>) {
             flex={flex}
             textStyle={item.cellTextStyle}
             render={item.render as any}
+            {...restProps}
+            borderedRight={i !== columns.length - 1}
           />
         );
       })}

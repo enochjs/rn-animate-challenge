@@ -16,6 +16,7 @@ export default function WithDecay() {
     .onFinalize((e) => {
       offset.value = withDecay({
         velocity: e.velocityX,
+        rubberBandEffect: true,
         clamp: [-(width / 2) + 40, width / 2 - 40],
       });
     });

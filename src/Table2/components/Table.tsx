@@ -1,4 +1,11 @@
-import { ScrollView, View, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, useWindowDimensions } from 'react-native';
+import {
+  ScrollView,
+  View,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+  LayoutChangeEvent,
+  useWindowDimensions,
+} from 'react-native';
 import { useSharedValue, useWorkletCallback } from 'react-native-reanimated';
 import Header from './Header';
 import { useCallback, useMemo, useState } from 'react';
@@ -8,10 +15,10 @@ import { IDefaultData, IRenderTableProps } from '../interface';
 import FixedColumns from './FixedColumns';
 import FixedHeader from './FixedHeader';
 
-const HEADER_HEIGHT = 56;
+const HEADER_HEIGHT = 36;
 
 export default function Table<T extends IDefaultData>(props: IRenderTableProps<T>) {
-  const { data, columns, heightArr, leftColumns, rightColumns } = props;
+  const { data, columns, heightArr, leftColumns, rightColumns, headerStyle, borderStyle, bordered, tableStyle } = props;
 
   const dimensions = useWindowDimensions();
 
@@ -46,7 +53,17 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
       return (
         <View className="flex-row" style={{ width: rowWidth }}>
           {columns.map((item, index) => (
-            <Col key={item.dataIndex as string} column={item} width={widthArr?.[index]} flex={flexArr?.[index]} data={data} heightArr={heightArr} />
+            <Col
+              key={item.dataIndex as string}
+              column={item}
+              width={widthArr?.[index]}
+              flex={flexArr?.[index]}
+              data={data}
+              heightArr={heightArr}
+              bordered={bordered}
+              borderedRight={index !== columns.length - 1}
+              borderStyle={borderStyle}
+            />
           ))}
         </View>
       );
@@ -54,7 +71,16 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
     return (
       <>
         {data.map((item: any, index) => (
-          <Row key={index} data={item} columns={columns} width={rowWidth} widthArr={widthArr} flexArr={flexArr} />
+          <Row
+            key={index}
+            data={item}
+            columns={columns}
+            width={rowWidth}
+            widthArr={widthArr}
+            flexArr={flexArr}
+            bordered={bordered}
+            borderStyle={borderStyle}
+          />
         ))}
       </>
     );
@@ -62,18 +88,45 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
 
   const renderFixed = () => {
     if (widthArr && heightArr) {
-      console.log('====lefr', leftColumns, rightColumns);
       return (
         <>
           {leftColumns?.length ? (
             <>
-              <FixedHeader columns={leftColumns} widthArr={widthArr} heightArr={heightArr} height={HEADER_HEIGHT} scrollY={scrollY} />
-              <FixedColumns columns={leftColumns} data={data} widthArr={widthArr} heightArr={heightArr} top={HEADER_HEIGHT} scrollY={scrollY} />
+              <FixedHeader
+                columns={leftColumns}
+                widthArr={widthArr}
+                heightArr={heightArr}
+                height={HEADER_HEIGHT}
+                scrollY={scrollY}
+                style={headerStyle}
+                bordered={bordered}
+                borderStyle={borderStyle}
+              />
+              <FixedColumns
+                columns={leftColumns}
+                data={data}
+                widthArr={widthArr}
+                heightArr={heightArr}
+                top={HEADER_HEIGHT}
+                scrollY={scrollY}
+                bordered={bordered}
+                borderStyle={borderStyle}
+              />
             </>
           ) : null}
           {rightColumns?.length ? (
             <>
-              <FixedHeader columns={rightColumns} widthArr={widthArr} heightArr={heightArr} height={HEADER_HEIGHT} scrollY={scrollY} fixed="right" />
+              <FixedHeader
+                columns={rightColumns}
+                widthArr={widthArr}
+                heightArr={heightArr}
+                height={HEADER_HEIGHT}
+                scrollY={scrollY}
+                fixed="right"
+                style={headerStyle}
+                bordered={bordered}
+                borderStyle={borderStyle}
+              />
               <FixedColumns
                 columns={rightColumns}
                 data={data}
@@ -82,6 +135,8 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
                 top={HEADER_HEIGHT}
                 scrollY={scrollY}
                 fixed="right"
+                bordered={bordered}
+                borderStyle={borderStyle}
               />
             </>
           ) : null}
@@ -92,17 +147,35 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
   };
 
   return (
-    <View className="relative h-80 overflow-hidden bg-white" onLayout={handleLayout}>
+    <View
+      className="relative bg-white"
+      onLayout={handleLayout}
+      style={[
+        borderStyle,
+        {
+          borderRadius: 16,
+          overflow: 'hidden',
+        },
+        tableStyle,
+      ]}
+    >
       <ScrollView horizontal showsVerticalScrollIndicator={false} style={{ position: 'relative', zIndex: 1 }}>
         <View style={{ position: 'relative', zIndex: 100 }}>
-          <ScrollView onScroll={handleScrollVertical} stickyHeaderIndices={[0]} scrollEventThrottle={16}>
+          <ScrollView
+            onScroll={handleScrollVertical}
+            stickyHeaderIndices={[0]}
+            scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
+          >
             <Header
               columns={columns}
               width={rowWidth}
               widthArr={widthArr}
               flexArr={flexArr}
               height={HEADER_HEIGHT}
-              style={{ backgroundColor: 'red' }}
+              style={headerStyle}
+              bordered={bordered}
+              borderStyle={borderStyle}
             />
             {renderContent()}
           </ScrollView>

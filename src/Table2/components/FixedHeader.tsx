@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import Cell from './Cell';
 
 export default function FixedHeader(props: IFixedHeaderProps) {
-  const { columns, scrollY, fixed = 'left', flexArr, widthArr, height } = props;
+  const { columns, scrollY, fixed = 'left', flexArr, widthArr, height, style, ...restProps } = props;
 
   const animatedYStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: scrollY.value < 0 ? -scrollY.value : 0 }],
@@ -17,17 +17,18 @@ export default function FixedHeader(props: IFixedHeaderProps) {
 
   return (
     <Animated.View
+      className="bg-standard-1"
       style={[
         {
           position: 'absolute',
           width: width,
           height: height,
-          backgroundColor: '#fff',
           zIndex: 10,
           left: fixed === 'left' ? 0 : undefined,
           right: fixed === 'right' ? 0 : undefined,
           flexDirection: 'row',
         },
+        style,
         animatedYStyle,
       ]}
     >
@@ -45,6 +46,13 @@ export default function FixedHeader(props: IFixedHeaderProps) {
             flex={flex}
             textStyle={item.cellTextStyle}
             render={() => <Text>{item.title}</Text>}
+            {...restProps}
+            style={[
+              style,
+              {
+                borderTopWidth: 0,
+              },
+            ]}
           />
         );
       })}

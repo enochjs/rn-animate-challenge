@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 export default function useColumns<T>(columns: T[]) {
   const { leftColumns, sortedColumns, rightColumns, hasRowSpan } = useMemo(() => {
-    // todo
     const leftColumns: T[] = [];
     const rightColumns: T[] = [];
     const otherColumns: T[] = [];

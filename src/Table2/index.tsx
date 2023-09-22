@@ -7,11 +7,21 @@ import { IDefaultData, ITableProps } from './interface';
 import useColumns from './hooks/useColumns';
 
 export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
-  const { data, columns, tableStyle, rowHeight } = props;
+  const {
+    data,
+    columns,
+    rowHeight,
+    bordered = true,
+    borderStyle = {
+      borderColor: '#E6E9F4',
+      borderWidth: 1,
+    },
+    ...restProps
+  } = props;
 
   const { leftColumns, sortedColumns, rightColumns, hasRowSpan } = useColumns(columns);
 
-  const { heightArr, handleLayout, loading } = useRowsLayout(data.length);
+  const { heightArr, handleLayout, loading } = useRowsLayout(data);
 
   const dimensions = useWindowDimensions();
 
@@ -39,6 +49,7 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
         heightArr={new Array(data.length).fill(rowHeight)}
         leftColumns={leftColumns}
         rightColumns={rightColumns}
+        {...restProps}
       />
     );
   }
@@ -46,19 +57,37 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
   // 有固定列和合并单元格则需要preRender 获取行高
   if (leftColumns.length || rightColumns.length || hasRowSpan) {
     return (
-      <View style={tableStyle}>
+      <View>
         {loading ? (
-          <PreRender onLayout={handleLayout} data={data} columns={columns} widthArr={widthArr} flexArr={flexArr} />
+          <PreRender
+            onLayout={handleLayout}
+            data={data}
+            columns={columns}
+            widthArr={widthArr}
+            flexArr={flexArr}
+            borderStyle={borderStyle}
+            bordered={bordered}
+            {...restProps}
+          />
         ) : (
-          <TableCom columns={sortedColumns} data={data} heightArr={heightArr} leftColumns={leftColumns} rightColumns={rightColumns} />
+          <TableCom
+            columns={sortedColumns}
+            data={data}
+            heightArr={heightArr}
+            leftColumns={leftColumns}
+            rightColumns={rightColumns}
+            borderStyle={borderStyle}
+            bordered={bordered}
+            {...restProps}
+          />
         )}
       </View>
     );
   }
 
   return (
-    <View style={tableStyle}>
-      <TableCom columns={columns} data={data} />
+    <View>
+      <TableCom columns={columns} data={data} borderStyle={borderStyle} bordered={bordered} {...restProps} />
     </View>
   );
 }

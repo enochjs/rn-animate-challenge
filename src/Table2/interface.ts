@@ -4,7 +4,7 @@ import { SharedValue } from 'react-native-reanimated';
 
 export type IDefaultData = Record<string, unknown>;
 
-type IGetColumn<T> = {
+export type IGetColumn<T> = {
   dataIndex: keyof T | 'feDataIndex';
   title: ReactNode;
   key?: string;
@@ -14,13 +14,21 @@ type IGetColumn<T> = {
   rowSpanKey?: string;
   cellStyle?: StyleProp<ViewStyle>;
   cellTextStyle?: StyleProp<TextStyle>;
+  fixed?: 'left' | 'right';
+  children?: IGetColumns<T>;
 };
 
-declare type IGetColumns<T> = IGetColumn<T>[];
+export type IGetColumns<T> = IGetColumn<T>[];
 
 export interface ITableCommonProps<T> {
   data: T[];
   columns: IGetColumns<T>;
+  borderedRight?: boolean;
+  bordered?: boolean;
+  borderStyle?: {
+    borderColor?: string;
+    borderWidth?: number;
+  };
 }
 
 export interface IPreRenderTableProps<T> extends ITableCommonProps<T> {
@@ -34,9 +42,11 @@ export interface IRenderTableProps<T> extends ITableCommonProps<T> {
   heightArr?: number[];
   leftColumns?: IGetColumns<T>;
   rightColumns?: IGetColumns<T>;
+  headerStyle?: StyleProp<ViewStyle>;
+  tableStyle?: StyleProp<ViewStyle>;
 }
 
-export interface ITableRowProps<T> {
+export interface ITableRowProps<T> extends Omit<ITableCommonProps<T>, 'data'> {
   data: T;
   style?: StyleProp<ViewStyle>;
   width?: number;
@@ -44,19 +54,19 @@ export interface ITableRowProps<T> {
   rowWidth?: number;
   widthArr?: number[];
   flexArr?: number[];
-  columns: IGetColumns<T>;
 }
 
-export interface ITableColProps<T> {
+export interface ITableColProps<T> extends Omit<ITableCommonProps<T>, 'columns'> {
   data: T[];
   style?: StyleProp<ViewStyle>;
   width?: number;
   flex?: number;
   column: IGetColumn<T>;
   heightArr: number[];
+  borderedRight?: boolean;
 }
 
-export interface ITableCellProps<T> {
+export interface ITableCellProps<T> extends Omit<ITableCommonProps<T>, 'data' | 'columns'> {
   data: T;
   dataIndex: string;
   width?: number;
@@ -65,10 +75,7 @@ export interface ITableCellProps<T> {
   rowIndex: number;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  borderStyle?: {
-    borderColor?: string;
-    borderWidth?: number;
-  };
+  borderedRight?: boolean;
   render?: (text: any, data: T, rowIndex: number) => ReactNode;
 }
 
@@ -79,11 +86,17 @@ export interface ITableHeaderProps<T> {
   height?: number;
   flexArr?: number[];
   columns: IGetColumns<T>;
+  bordered?: boolean;
+  borderStyle?: {
+    borderColor?: string;
+    borderWidth?: number;
+  };
 }
 
 export interface ITableProps<T> extends ITableCommonProps<T> {
   tableStyle?: StyleProp<ViewStyle>;
   rowHeight?: number;
+  loading?: boolean;
 }
 
 export interface IFixedColumnsProps<T> extends ITableCommonProps<T> {
@@ -96,6 +109,7 @@ export interface IFixedColumnsProps<T> extends ITableCommonProps<T> {
 }
 
 export interface IFixedHeaderProps {
+  style?: StyleProp<ViewStyle>;
   heightArr: number[];
   height: number;
   flexArr?: number[];
@@ -103,4 +117,9 @@ export interface IFixedHeaderProps {
   scrollY: SharedValue<number>;
   fixed?: 'left' | 'right';
   columns: any[];
+  bordered?: boolean;
+  borderStyle?: {
+    borderColor?: string;
+    borderWidth?: number;
+  };
 }

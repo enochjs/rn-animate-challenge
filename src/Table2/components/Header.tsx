@@ -5,7 +5,7 @@ import { sum } from '../utils';
 import { IDefaultData, ITableHeaderProps } from '../interface';
 
 export default function Header<T extends IDefaultData>(props: ITableHeaderProps<T>) {
-  const { width, widthArr, height, style, flexArr, columns } = props;
+  const { width, widthArr, height, style, flexArr, columns, ...restProps } = props;
 
   const composedStyle = useMemo(() => {
     const _width = width ? width : widthArr ? sum(widthArr) : 0;
@@ -20,7 +20,7 @@ export default function Header<T extends IDefaultData>(props: ITableHeaderProps<
   }, [width, widthArr, height]);
 
   return (
-    <View className="flex-row overflow-hidden" style={[composedStyle, style]}>
+    <View className="flex-row overflow-hidden bg-standard-1" style={[composedStyle, style]}>
       {columns.map((item, i) => {
         const flex = flexArr?.[i];
         const wth = widthArr?.[i];
@@ -35,6 +35,14 @@ export default function Header<T extends IDefaultData>(props: ITableHeaderProps<
             flex={flex}
             textStyle={item.cellTextStyle}
             render={() => <Text>{item.title}</Text>}
+            {...restProps}
+            style={[
+              style,
+              {
+                borderTopWidth: 0,
+              },
+            ]}
+            borderedRight={i !== columns.length - 1}
           />
         );
       })}
