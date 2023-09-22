@@ -19,7 +19,8 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
     ...restProps
   } = props;
 
-  const { leftColumns, sortedColumns, rightColumns, hasRowSpan } = useColumns(columns);
+  const { leftColumns, sortedColumns, rightColumns, hasRowSpan, headerLeftColumns, headerRightColumns, headerColumns, maxLevelDeep } =
+    useColumns(columns);
 
   const { heightArr, handleLayout, loading } = useRowsLayout(data);
 
@@ -49,6 +50,10 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
         heightArr={new Array(data.length).fill(rowHeight)}
         leftColumns={leftColumns}
         rightColumns={rightColumns}
+        headerColumns={headerColumns}
+        headerLeftColumns={headerLeftColumns}
+        headerRightColumns={headerRightColumns}
+        maxLevelDeep={maxLevelDeep}
         {...restProps}
       />
     );
@@ -78,6 +83,10 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
             rightColumns={rightColumns}
             borderStyle={borderStyle}
             bordered={bordered}
+            headerColumns={headerColumns}
+            headerLeftColumns={headerLeftColumns}
+            headerRightColumns={headerRightColumns}
+            maxLevelDeep={maxLevelDeep}
             {...restProps}
           />
         )}

@@ -29,6 +29,10 @@ export interface ITableCommonProps<T> {
     borderColor?: string;
     borderWidth?: number;
   };
+  headerLeftColumns?: IGetColumns<T>;
+  headerRightColumns?: IGetColumns<T>;
+  headerColumns?: IGetColumns<T>;
+  maxLevelDeep?: number;
 }
 
 export interface IPreRenderTableProps<T> extends ITableCommonProps<T> {

@@ -1,11 +1,4 @@
-import {
-  ScrollView,
-  View,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
-  LayoutChangeEvent,
-  useWindowDimensions,
-} from 'react-native';
+import { ScrollView, View, NativeSyntheticEvent, NativeScrollEvent, LayoutChangeEvent, useWindowDimensions } from 'react-native';
 import { useSharedValue, useWorkletCallback } from 'react-native-reanimated';
 import Header from './Header';
 import { useCallback, useMemo, useState } from 'react';
@@ -18,7 +11,22 @@ import FixedHeader from './FixedHeader';
 const HEADER_HEIGHT = 36;
 
 export default function Table<T extends IDefaultData>(props: IRenderTableProps<T>) {
-  const { data, columns, heightArr, leftColumns, rightColumns, headerStyle, borderStyle, bordered, tableStyle } = props;
+  const {
+    data,
+    columns,
+    heightArr,
+    leftColumns,
+    rightColumns,
+    headerStyle,
+    borderStyle,
+    bordered,
+    tableStyle,
+    headerLeftColumns,
+    headerRightColumns,
+    headerColumns,
+  } = props;
+
+  console.log('===header columns', headerColumns);
 
   const dimensions = useWindowDimensions();
 
@@ -90,10 +98,10 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
     if (widthArr && heightArr) {
       return (
         <>
-          {leftColumns?.length ? (
+          {leftColumns?.length && headerLeftColumns?.length ? (
             <>
               <FixedHeader
-                columns={leftColumns}
+                columns={headerLeftColumns}
                 widthArr={widthArr}
                 heightArr={heightArr}
                 height={HEADER_HEIGHT}
@@ -114,10 +122,10 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
               />
             </>
           ) : null}
-          {rightColumns?.length ? (
+          {rightColumns?.length && headerRightColumns?.length ? (
             <>
               <FixedHeader
-                columns={rightColumns}
+                columns={headerRightColumns}
                 widthArr={widthArr}
                 heightArr={heightArr}
                 height={HEADER_HEIGHT}
@@ -161,14 +169,9 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
     >
       <ScrollView horizontal showsVerticalScrollIndicator={false} style={{ position: 'relative', zIndex: 1 }}>
         <View style={{ position: 'relative', zIndex: 100 }}>
-          <ScrollView
-            onScroll={handleScrollVertical}
-            stickyHeaderIndices={[0]}
-            scrollEventThrottle={16}
-            showsVerticalScrollIndicator={false}
-          >
+          <ScrollView onScroll={handleScrollVertical} stickyHeaderIndices={[0]} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>
             <Header
-              columns={columns}
+              columns={headerColumns || columns}
               width={rowWidth}
               widthArr={widthArr}
               flexArr={flexArr}
@@ -181,7 +184,7 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
           </ScrollView>
         </View>
       </ScrollView>
-      {renderFixed()}
+      {/* {renderFixed()} */}
     </View>
   );
 }

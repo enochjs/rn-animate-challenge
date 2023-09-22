@@ -29,7 +29,7 @@ const formatColumnAndGetLevelDeep = (column: IColumn) => {
 };
 
 export default function useColumns<T extends IColumn>(columns: T[]) {
-  const { leftColumns, sortedColumns, rightColumns, hasRowSpan } = useMemo(() => {
+  const memoResult = useMemo(() => {
     const leftColumns: T[] = [];
     const rightColumns: T[] = [];
     const otherColumns: T[] = [];
@@ -38,7 +38,7 @@ export default function useColumns<T extends IColumn>(columns: T[]) {
     const headerOtherColumns: T[] = [];
     let hasRowSpan = false;
     let maxLevelDeep = 0;
-    columns.forEach((c: any) => {
+    columns.forEach((c) => {
       const { column, computedColumns, levelDeep }: any = formatColumnAndGetLevelDeep(c);
 
       maxLevelDeep = Math.max(maxLevelDeep, levelDeep);
@@ -61,15 +61,12 @@ export default function useColumns<T extends IColumn>(columns: T[]) {
       sortedColumns: [...leftColumns, ...otherColumns, ...rightColumns],
       rightColumns,
       hasRowSpan,
+      headerLeftColumns,
+      headerRightColumns,
       headerColumns: [...headerLeftColumns, ...headerOtherColumns, ...headerRightColumns],
       maxLevelDeep,
     };
   }, [columns]);
 
-  return {
-    leftColumns,
-    sortedColumns,
-    rightColumns,
-    hasRowSpan,
-  };
+  return memoResult;
 }
