@@ -1,0 +1,16 @@
+const a = [
+  { dataIndex: 'color11', fixed: 'left', key: 'color11', rowSpanKey: 'rowSpan', title: '颜色11', width: 100 },
+  { dataIndex: 'color12', fixed: 'left', key: 'color12', rowSpanKey: 'rowSpan', title: '颜色12', width: 100 },
+  { dataIndex: 'color13', fixed: 'left', key: 'color13', rowSpanKey: 'rowSpan', title: '颜色13', width: 100 },
+  { dataIndex: 'color14', fixed: 'left', key: 'color14', rowSpanKey: 'rowSpan', title: '颜色14', width: 100 },
+  { dataIndex: 'color15', fixed: 'left', key: 'color15', rowSpanKey: 'rowSpan', title: '颜色15', width: 100 },
+  { dataIndex: 'color16', fixed: 'left', key: 'color16', rowSpanKey: 'rowSpan', title: '颜色16', width: 100 },
+  { dataIndex: 'color17', fixed: 'left', key: 'color17', rowSpanKey: 'rowSpan', title: '颜色17', width: 100 },
+  { dataIndex: 'color21', fixed: 'left', key: 'color21', rowSpanKey: 'rowSpan', title: '颜色21', width: 100 },
+  { dataIndex: 'color221', fixed: 'left', key: 'color221', rowSpanKey: 'rowSpan', title: '颜色221', width: 100 },
+  { dataIndex: 'color222', fixed: 'left', key: 'color222', rowSpanKey: 'rowSpan', title: '颜色222', width: 100 },
+  { dataIndex: 'color23', fixed: 'left', key: 'color23', rowSpanKey: 'rowSpan', title: '颜色23', width: 100 },
+  { dataIndex: 'color24', fixed: 'left', key: 'color24', rowSpanKey: 'rowSpan', title: '颜色24', width: 100 },
+  { dataIndex: 'color25', fixed: 'left', key: 'color25', rowSpanKey: 'rowSpan', title: '颜色25', width: 100 },
+  { dataIndex: 'color3', fixed: 'left', key: 'color3', rowSpanKey: 'rowSpan', title: '颜色3', width: 100 },
+];
