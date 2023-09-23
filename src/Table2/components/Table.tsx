@@ -24,9 +24,8 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
     headerLeftColumns,
     headerRightColumns,
     headerColumns,
+    maxLevelDeep,
   } = props;
-
-  console.log('===header columns', headerColumns);
 
   const dimensions = useWindowDimensions();
 
@@ -109,6 +108,7 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
                 style={headerStyle}
                 bordered={bordered}
                 borderStyle={borderStyle}
+                maxLevelDeep={maxLevelDeep}
               />
               <FixedColumns
                 columns={leftColumns}
@@ -134,6 +134,7 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
                 style={headerStyle}
                 bordered={bordered}
                 borderStyle={borderStyle}
+                maxLevelDeep={maxLevelDeep}
               />
               <FixedColumns
                 columns={rightColumns}
@@ -179,6 +180,7 @@ export default function Table<T extends IDefaultData>(props: IRenderTableProps<T
               style={headerStyle}
               bordered={bordered}
               borderStyle={borderStyle}
+              maxLevelDeep={maxLevelDeep}
             />
             {renderContent()}
           </ScrollView>

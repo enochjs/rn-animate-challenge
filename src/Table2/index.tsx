@@ -22,6 +22,8 @@ export default function Table<T extends IDefaultData>(props: ITableProps<T>) {
   const { leftColumns, sortedColumns, rightColumns, hasRowSpan, headerLeftColumns, headerRightColumns, headerColumns, maxLevelDeep } =
     useColumns(columns);
 
+  console.log('=====headerColumns', headerColumns);
+
   const { heightArr, handleLayout, loading } = useRowsLayout(data);
 
   const dimensions = useWindowDimensions();

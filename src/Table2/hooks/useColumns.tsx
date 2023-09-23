@@ -1,7 +1,5 @@
 import { useMemo } from 'react';
-import { IGetColumn } from '../interface';
-
-type IColumn = IGetColumn<any>;
+import { IColumn } from '../interface';
 
 const formatColumnAndGetLevelDeep = (column: IColumn) => {
   let levelDeep = 1;

@@ -10,6 +10,7 @@ export type IGetColumn<T> = {
   key?: string;
   render?: (text: any, record: T, index: number) => ReactNode;
   width: number;
+  flex?: number;
   height?: number;
   rowSpanKey?: string;
   cellStyle?: StyleProp<ViewStyle>;
@@ -19,6 +20,7 @@ export type IGetColumn<T> = {
 };
 
 export type IGetColumns<T> = IGetColumn<T>[];
+export type IColumn = IGetColumn<any>;
 
 export interface ITableCommonProps<T> {
   data: T[];
@@ -83,13 +85,12 @@ export interface ITableCellProps<T> extends Omit<ITableCommonProps<T>, 'data' | 
   render?: (text: any, data: T, rowIndex: number) => ReactNode;
 }
 
-export interface ITableHeaderProps<T> {
+export interface ITableHeaderProps<T> extends Omit<ITableCommonProps<T>, 'data'> {
   style?: StyleProp<ViewStyle>;
   width?: number;
   widthArr?: number[];
   height?: number;
   flexArr?: number[];
-  columns: IGetColumns<T>;
   bordered?: boolean;
   borderStyle?: {
     borderColor?: string;
@@ -112,7 +113,7 @@ export interface IFixedColumnsProps<T> extends ITableCommonProps<T> {
   fixed?: 'left' | 'right';
 }
 
-export interface IFixedHeaderProps {
+export interface IFixedHeaderProps extends Omit<ITableCommonProps<any>, 'data'> {
   style?: StyleProp<ViewStyle>;
   heightArr: number[];
   height: number;
@@ -120,10 +121,4 @@ export interface IFixedHeaderProps {
   widthArr?: number[];
   scrollY: SharedValue<number>;
   fixed?: 'left' | 'right';
-  columns: any[];
-  bordered?: boolean;
-  borderStyle?: {
-    borderColor?: string;
-    borderWidth?: number;
-  };
 }
