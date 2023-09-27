@@ -11,7 +11,9 @@ import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
 import WithDecay from '@/Animated/WithDecay';
 import Collapsible from '@/Collapsible/demo';
+import WithSequence from '@/Animated/WithSequence';
+import TextInputMultiWithKeyboardView from '@/Difficult/TextInputMultiWithKeyboardView';
 
 export default function App() {
-  return <Collapsible />;
+  return <TextInputMultiWithKeyboardView />;
 }
