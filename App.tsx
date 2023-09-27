@@ -10,7 +10,8 @@ import ImagePanZoom from '@/Image/imagePanZoom';
 import Swipealbe from '@/Gesture/swipealbe';
 import AnimatedKeyboardExample from '@/Animated/AnimatedKeyboard';
 import WithDecay from '@/Animated/WithDecay';
+import Collapsible from '@/Collapsible/demo';
 
 export default function App() {
-  return <WithDecay />;
+  return <Collapsible />;
 }
