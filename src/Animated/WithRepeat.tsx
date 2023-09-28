@@ -9,14 +9,22 @@ export default function WithRepeat() {
   const rotate = useSharedValue(0);
 
   useEffect(() => {
-    rotate.value = withRepeat(withTiming(1, { duration, easing }), -1);
+    rotate.value = withRepeat(withTiming(0.5, { duration, easing }), -1);
   }, []);
 
-  const animatedStyle = useAnimatedStyle();
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          rotate: `${rotate.value * 360}deg`,
+        },
+      ],
+    };
+  });
 
   return (
     <GestureHandlerRootView className="flex-1 justify-center items-center">
-      <Animated.View className="w-20 h-20 rounded-2xl bg-purple-400"></Animated.View>
+      <Animated.View className="w-20 h-20 rounded-2xl bg-purple-400" style={animatedStyle}></Animated.View>
     </GestureHandlerRootView>
   );
 }
